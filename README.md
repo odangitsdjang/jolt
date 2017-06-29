@@ -16,7 +16,7 @@ We welcome you and thank you for taking the time to do this coding assessment. P
 * Check out the API index at http://localhost:3008. Note that the api uses json-server: https://github.com/typicode/json-server
 * Don't be overwhelmed, supposed to be more steps than you are likely to complete in your given time frame. Try to do them in order, but you can skip steps if you get stuck. If you skip a feature, put in the notes as to why you skipped it.
 * Put the time that you start and end on the first line of notes.md. Also, add any grading advice, disclaimers, brags, feedback, or anomalies you encounter along your way.
-* This is a git repo. Plesse try to commit often and add messages to your commits so we can more easily review your work.
+* This is a git repo. Please try to commit often and add messages to your commits so we can more easily review your work. This is a local git repo, so don't worry about pushing your commits up anywhere.
 * We added more steps than we expect you to finish. Don't be overwhelmed and get as far as you can in the time you have. We will take into account the time amount of time you took, the amount of experience you have in ReactJS, etc.
 * **The webpack server and API server for the project can be run via `npm start`**.
 
