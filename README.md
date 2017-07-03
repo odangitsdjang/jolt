@@ -30,7 +30,7 @@ We welcome you and thank you for taking the time to do this coding assessment. P
 
 ### PART II - Controlled Data Fetching (This is an important step, please don't skip it)
 
- 4. Paginate the list of cards, loading no more than 10 at a time. Do server-side pagination (NOT client-side): https://github.com/typicode/json-server#paginate.
+ 4. Paginate the list of cards (using something like Prev/Next buttons or infinite scroll) loading no more than 10 at a time. Do server-side pagination (NOT client-side): https://github.com/typicode/json-server#paginate.
  5. Make the provided `SearchBar` component work as a filter on the people cards, acting on any of their attributes, filtering at the server level and still paginating the results(ref: https://github.com/typicode/json-server#full-text-search).
 
 ### PART III - Saving to the server
