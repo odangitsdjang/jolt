@@ -48,7 +48,7 @@ We welcome you and thank you for taking the time to do this coding assessment. P
 ### PART V - Drag and Drop
 
 11. When a user clicks on the favorite count, route to a page that displays all the favorite cards, miniaturized using css. Add a back button to go back to the main list.
-12. Add drag-and-drop functionality using [react-dnd](http://react-dnd.github.io/react-dnd/) in order to sort the favorites. Display the order above the card. Save the order to the `http://localhost:3008/peoplefavorites` endpoint in order to persist it and load the saved favorite order from the server.
+12. Add drag-and-drop functionality using [react-sortable-hoc](https://www.npmjs.com/package/react-sortable-hoc) in order to sort the favorites. Display the order above the card. Save the order to the `http://localhost:3008/peoplefavorites` endpoint in order to persist it and load the saved favorite order from the server.
 13. Update your code so that when a new card is favorited or unfavorited, that change is persisted to the server. New, unsorted favorites should be added to the end of the favorite list in order of when they were favorited (unless changed by sorting).
 
 # May the force be with you.
