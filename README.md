@@ -36,9 +36,9 @@ We welcome you and thank you for taking the time to do this coding assessment. P
 ### PART III - Saving to the server
 
  6. Add an edit button on the card that displays a form to edit the person's name and birthday. The form should be displayed inline (toggle the name and birthday on the *Card* to be form inputs). 
- 7. Add a *Save* button to the form that updates the person's attributes by making a PATCH request to `http://localhost:3008/people/[the person's id goes here]`. Note from the json-server documentation:
+ 7. Add a *Save* button to the form that updates the person's attributes by making a PATCH request to `http://localhost:3008/people/[the person's id goes here]`. After sucessfully making the request, it should toggle back to read mode and show the updated name and birthday. Note from the json-server documentation:
  > A POST, PUT or PATCH request should include a Content-Type: application/json header to use the JSON in the request body.
-8. Create a component that renders a `<select></select>` element For the person's home world. Pass in the list of planets from the API a prop to create options for the select element. Use each planet's id as the value like so `<option value=1>Tatooine</option>`. Make sure that this saves correctly to the server
+8. Create a component that renders a `<select></select>` element For the person's home world when in edit mode. Pass in the list of planets from the API a prop to create options for the select element. Use each planet's id as the value like so `<option value=1>Tatooine</option>`. Make sure that this saves correctly to the server
 
 ### PART IV - Favoriting Cards
 
