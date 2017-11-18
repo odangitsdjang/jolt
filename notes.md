@@ -18,4 +18,5 @@ person.homeworld = successPlanet.data[person.homeworld-1].name;
 Then I realized the server side is extremely easy and all I had to really do was manipulate the url in the get call, and the important part is the styling on the client side. Readme also said styling is not the important part so I’ll come back to that after (if) I finish all the functionality.
 5. Searching was not anything new. ISSUE: Search part doesn’t handle the planet name properly, and some of the results are not very intuitive like if you look up "lu" it shows up more than just Luke because the resulting beings also have "bLUe" eye color.
 
-6. 
+6. Relatively straightforward.
+7. I couldn't get this to work for over 1 hour.. I looked up google but I kept getting 404 back from the backend. I made the rookie mistake of doing a POST request instead of PATCH... duh

@@ -6,7 +6,8 @@
     -webkit-box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.49);
     -moz-box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.49);
     box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.49);
-    background: #121212;
+		background: #121212;
+		
 }
 
 .card-content{
@@ -31,8 +32,13 @@
 	color: white;
 	padding: 10px;
 	border-radius: 8px;
+	display: flex;
+	justify-content: space-between;
 }
 
+.cursor:hover {
+	cursor: pointer;
+}
 .card p span{
 	margin: 0 10px;
 }
