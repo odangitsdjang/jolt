@@ -5,33 +5,53 @@ import SearchBar from "./SearchBar.js";
 import star from './images/star.svg';
 import wars from './images/wars.svg';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.allTheCards = this.allTheCards.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.state = {
-      people: []
+      people: [],
+      pageCount: 8,
+      searchQuery: ""
     };
   }
 
   componentWillMount() {
-    this.allTheCards();
+    this.allTheCards("_page=1");
   }
 
   // API call to get the cards from 'http://localhost:3008/people'
-  allTheCards() {
-    axios.get("http://localhost:3008/people").then(successPerson => {
-      axios.get("http://localhost:3008/planets").then(successPlanet => {
+  allTheCards(query) {
+    axios.get("http://localhost:3008/planets").then(successPlanet => {
+      axios.get(`http://localhost:3008/people?${query}`).then(successPerson => {
         // After getting planet data and people data then map the people's home planet 
         // with the proper name of the planet
-        successPerson.data.forEach(person => {
+        successPerson.data.forEach( person => {
           // need to do minus one because successplanet is an array and array index starts at 0 while the id's start at 1
-          person.homeworld = successPlanet.data[person.homeworld - 1].name;
+          person.homeworld = successPlanet.data[person.homeworld-1].name;
         });
-        this.setState({ people: successPerson.data });
+        this.setState({ people: successPerson.data, pageCount: Math.ceil( parseInt(successPerson.headers["x-total-count"] / 10 )) });
       });
     });
+  }
+
+  handlePageClick() {
+    return (data) => {
+      // add one because page starts at 1 on the backend but pagination starts with 0 (but displayed as 1 on the front end as well)
+      const searched = this.state.searchQuery ? `q=${this.state.searchQuery}&` : "";
+      this.allTheCards(`${searched}_page=${data.selected + 1}`);
+    };
+  }
+
+  // 'this' represents this App class and query is the input dom
+  handleSearch(query) {
+    const actualString = query.target.value;
+    this.setState({ searchQuery: actualString});
+    // Make an ajax call to the backend with this string
+    this.allTheCards(`q=${actualString}&_page=1`);
   }
 
   render() {
@@ -42,8 +62,15 @@ class App extends Component {
           <span className='interview-text'>The Interview</span>
           <img src={wars} alt="wars-logo" />
         </div>
-        <SearchBar />
+        <SearchBar value={this.state.searchQuery} search={this.handleSearch} />
         {this.state.people.map((people, i) => <Card key={i} person={people} />)}
+        <ReactPaginate 
+          initialPage={0}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick()}
+          activeClassName={"active"} />
       </div>
     );
   }

@@ -10,7 +10,8 @@
   "dependencies": {
     "axios": "^0.17.1",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-paginate": "^5.0.0"
   },
   "scripts": {
     "start": "./node_modules/.bin/concurrently \"cd ./node_modules/swapi-json-server && node app.js\" \"react-scripts start\"",
