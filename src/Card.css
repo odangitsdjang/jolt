@@ -36,9 +36,18 @@
 	justify-content: space-between;
 }
 
-.cursor:hover {
+.pointer:hover {
 	cursor: pointer;
+}
+.center {
+	text-align: center;
 }
 .card p span{
 	margin: 0 10px;
+}
+.favorite {
+	color: white;
+	background-color: blue;
+	border-radius: 10px;
+	border: 1px solid #121212;
 }

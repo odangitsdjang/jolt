@@ -15,25 +15,28 @@ class App extends Component {
     this.state = {
       people: [],
       pageCount: 8,
-      searchQuery: ""
+      searchQuery: "",
+      planets: []
     };
   }
 
   componentWillMount() {
     this.allTheCards("_page=1");
+    const data = {
+      homeworld: 1
+    };
+
   }
 
   // API call to get the cards from 'http://localhost:3008/people'
   allTheCards(query) {
     axios.get("http://localhost:3008/planets").then(successPlanet => {
       axios.get(`http://localhost:3008/people?${query}`).then(successPerson => {
-        // After getting planet data and people data then map the people's home planet 
-        // with the proper name of the planet
-        successPerson.data.forEach( person => {
-          // need to do minus one because successplanet is an array and array index starts at 0 while the id's start at 1
-          person.homeworld = successPlanet.data[person.homeworld-1].name;
+        this.setState({
+          people: successPerson.data,
+          pageCount: Math.ceil(parseInt(successPerson.headers["x-total-count"] / 10)),
+          planets: successPlanet.data
         });
-        this.setState({ people: successPerson.data, pageCount: Math.ceil( parseInt(successPerson.headers["x-total-count"] / 10 )) });
       });
     });
   }
@@ -49,7 +52,7 @@ class App extends Component {
   // 'this' represents this App class and query is the input dom
   handleSearch(query) {
     const actualString = query.target.value;
-    this.setState({ searchQuery: actualString});
+    this.setState({ searchQuery: actualString });
     // Make an ajax call to the backend with this string
     this.allTheCards(`q=${actualString}&_page=1`);
   }
@@ -63,8 +66,8 @@ class App extends Component {
           <img src={wars} alt="wars-logo" />
         </div>
         <SearchBar value={this.state.searchQuery} search={this.handleSearch} />
-        {this.state.people.map((people, i) => <Card key={i} person={people} />)}
-        <ReactPaginate 
+        {this.state.people.map((people, i) => <Card key={i} person={people} planets={this.state.planets} />)}
+        <ReactPaginate
           initialPage={0}
           pageCount={this.state.pageCount}
           marginPagesDisplayed={2}

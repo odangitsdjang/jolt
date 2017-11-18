@@ -8,11 +8,13 @@ class Card extends Component {
     this.state = {
       edit: 0,
       name: "",
-      birth_year: ""
+      birth_year: "",
+      favorite: 0
     };
     this.enableEdit = this.enableEdit.bind(this);
     this.editOrRender = this.editOrRender.bind(this);
     this.save = this.save.bind(this);
+    this.allPlanetOptions = this.allPlanetOptions.bind(this);
   }
 
   enableEdit() {
@@ -20,11 +22,15 @@ class Card extends Component {
   }
 
   componentWillMount() {
-    this.setState({ name: this.props.person.name, birth_year: this.props.person.birth_year });
+    const { person } = this.props;
+    this.setState({ name: person.name, birth_year: person.birth_year, homeworld: person.homeworld });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ name: nextProps.person.name, birth_year: nextProps.person.birth_year, edit: 0 });
+    this.setState({
+      name: nextProps.person.name, birth_year: nextProps.person.birth_year,
+      homeworld: nextProps.person.homeworld, edit: 0
+    });
   }
 
   editInputs() {
@@ -36,12 +42,19 @@ class Card extends Component {
   save() {
     const data = {
       name: this.state.name,
-      birth_year: this.state.birth_year
+      birth_year: this.state.birth_year,
+      homeworld: this.state.homeworld
     };
     axios.patch(`http://localhost:3008/people/${this.props.person.id}`, data, {
       headers: { 'Content-Type': 'application/json' }
     }).then(success => {
       this.setState({ edit: 0, name: this.state.name, birth_year: this.state.birth_year });
+    });
+  }
+
+  allPlanetOptions() {
+    return this.props.planets.map((planet, index) => {
+      return <option key={index} value={index + 1}>{planet.name}</option>;
     });
   }
 
@@ -54,11 +67,31 @@ class Card extends Component {
       return this.state.edit ?
         <input value={this.state.birth_year} name="birth_year" onChange={this.editInputs()} /> :
         <span>{this.state.birth_year}</span>;
+    else if (section === 'homeworld')
+      return this.state.edit ?
+        <select value={this.state.homeworld} name="homeworld" onChange={this.editInputs()}>{this.allPlanetOptions()}</select> :
+        <span>{this.props.planets[this.state.homeworld - 1].name}</span>;
+
+
+    // need to do minus one because successplanet is an array and array index starts at 0 while the id's start at 1
     else
       return this.state.edit ?
-        <div className="cursor" onClick={this.save}>Save</div> :
-        <div className="cursor" onClick={this.enableEdit}>Edit</div>;
+        <div className="pointer" onClick={this.save}>Save</div> :
+        <div className="pointer" onClick={this.enableEdit}>Edit</div>;
 
+  }
+
+  favorite() {
+    return (e) => {
+      if (this.state.favorite) {
+        this.setState({ favorite: 0 });
+        e.target.style.backgroundColor = 'blue';
+      } else {
+        this.setState({ favorite: 1 });
+        e.target.style.backgroundColor = 'red';
+      }
+    };
+    
   }
 
   render() {
@@ -66,22 +99,23 @@ class Card extends Component {
     return (
       <div className='card'>
         <div className='card-content'>
-          <form >
-            <div className='card-name'>
-              {this.editOrRender('name')}
-              {this.editOrRender('edit')}
-            </div>
-            <img src={`http://localhost:3008/${person.image}`} alt='profile' />
-            <p>
-              <span>Birthday:</span>
-              {this.editOrRender('birthday')}
-            </p>
-            <p>
-              {/* Note that in order to get the homeworld's name, you have to get the planet name from a different endpoint than the people */}
-              <span>Homeworld:</span>
-              <span>{person.homeworld}</span>
-            </p>
-          </form>
+          <div className='card-name'>
+            {this.editOrRender('name')}
+            {this.editOrRender('edit')}
+          </div>
+          <img src={`http://localhost:3008/${person.image}`} alt='profile' />
+          <p>
+            <span>Birthday:</span>
+            {this.editOrRender('birthday')}
+          </p>
+          <p>
+            {/* Note that in order to get the homeworld's name, you have to get the planet name from a different endpoint than the people */}
+            <span>Homeworld:</span>
+            {this.editOrRender('homeworld')}
+          </p>
+          <p className="center">
+            <div onClick={this.favorite()} className="favorite pointer">{this.state.favorite ? "Unfavorite" : "Favorite"}</div>
+          </p>
         </div>
       </div>
 
